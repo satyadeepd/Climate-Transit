@@ -1,118 +1,116 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useEffect } from 'react';
+import {Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Splash from './src/screens/Splash';
+import Language from './src/screens/Language';
+import OnBoarding from './src/screens/OnBoarding';
+import OnboardingScreen from './src/screens/OnBoardin1';
+import Login from './src/screens/Login';
+import Signup from './src/screens/Signup';
+import RNBootSplash from "react-native-bootsplash";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import DrawerNavigatorRoutes from './src/screens/DrawerNavigatorRoutes';
+import Placestosee from './src/screens/Placestosee';
+import Dashboard from './src/screens/Dashboard';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const stack = createNativeStackNavigator();
+const tabs=createBottomTabNavigator();
+const Auth = () => {
+  // Stack Navigator for Login and Sign up Screen
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <stack.Navigator initialRouteName="OnBoarding">
+      <stack.Screen
+        name="OnBoarding"
+        component={OnboardingScreen}
+        options={{headerShown: false}}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      <stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}
+      />
+      <stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{
+          headerShown:false,
+          title: 'Register', //Set Header Title
+          headerStyle: {
+            backgroundColor: '#307ecc', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+    </stack.Navigator>
   );
-}
+};
+const App = () => {
+  useEffect(()=>{
+     RNBootSplash.hide({fade:true});
+  })
+  return (
+    <NavigationContainer>
+      <stack.Navigator
+        initialRouteName="Language"
+        screenOptions={{headerShown: false}}>
+        {/* <stack.Screen name="Splash" component={Splash} />
+        <stack.Screen name="Language" component={Language} /> */}
+        {/* <stack.Screen name="Login" component={Login} />
+        <stack.Screen name="Signup" component={Signup} /> */}
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+
+        
+        <stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{headerShown: false}}
+        />
+        {/*<stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        /> */}
+         <stack.Screen
+          name="DrawerNavigatorRoutes"
+          component={DrawerNavigatorRoutes}
+          // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        />
+        <stack.Screen
+          name="Placestosee"
+          component={DrawerNavigatorRoutes}
+          // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        />
+        <stack.Screen
+          name="Thingstodo"
+          component={DrawerNavigatorRoutes}
+          // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        />
+         <stack.Screen
+          name="WetlandHealtAssessment"
+          component={DrawerNavigatorRoutes}
+          // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        />
+          <stack.Screen
+          name="WaterFootprint"
+          component={DrawerNavigatorRoutes}
+          // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        />
+       
+      </stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default App;
