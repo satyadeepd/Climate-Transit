@@ -61,7 +61,8 @@ const Login=({navigation}) => {
                         </Text>
                     </View>
                    
-                    <TouchableOpacity style={{flex:1,paddingLeft:5}}>
+                    <TouchableOpacity style={{flex:1,paddingLeft:5}}
+                        onPress={()=>navigation.navigate("Signup")}>
                         <Text style={{color:'black'}}>
                              Signup
                         </Text>
